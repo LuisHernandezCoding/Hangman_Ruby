@@ -21,4 +21,16 @@ describe 'logic' do
     guesses = 10
     expect(logic.check_guesses(word, guesses)).to be true
   end
+
+  it 'should check if the player wins' do
+    word = 'hangman'
+    guesses = %w[h a g m]
+    expect(logic.check_win(word, guesses)).to be false
+    guesses = %w[h a n g m]
+    expect(logic.check_win(word, guesses)).to be true
+    word = 'hello'
+    expect(logic.check_win(word, guesses)).to be false
+    guesses = %w[h e l o]
+    expect(logic.check_win(word, guesses)).to be true
+  end
 end

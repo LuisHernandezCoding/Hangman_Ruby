@@ -10,7 +10,7 @@ class Display
     @word = word
     @word_values = '_ ' * word.length
     @show_instructions = false
-    @cheat = true
+    @cheat = false
   end
 
   def update_values(guesses)
@@ -19,15 +19,15 @@ class Display
     end.join(' ')
   end
 
-  def update(guesses, guesses_left, word)
+  def update( message, guesses, guesses_left, word)
     system('clear') or system('cls')
-    print_message(['Hangman Game', 'By: @LuisHernandezCoding'], 100, 'bg_blue', 'bg_black', use_symbol: true)
+    print_message(['Hangman Game', 'By: @LuisHernandezCoding'], 100, 'bg_white', 'bg_black', use_symbol: true)
+    print_message([message, "Guesses left: #{guesses_left}"], 100, 'bg_dark gray', 'bg_black')
+
     print_instructions if @show_instructions
-    print_args = []
-    print_args[0] = "Guesses left: #{guesses_left}"
-    print_args[1] = "Cheating: #{@cheat ? word : 'Nope'}"
-    print_message([print_args.join(' | '), "Guesses: #{guesses.join(', ')}"], 100, 'bg_cyan', 'bg_black')
-    print_message([@word_values], 100, 'bg_cyan', 'bg_black')
+    print_args = ["Guesses: #{guesses.join(', ')}", @word_values]
+    print_args[2] = @cheat ? "CHEATING: #{word}" : nil
+    print_message(print_args, 100, 'bg_black', 'bg_red', use_symbol: true)
   end
 
   def print_instructions

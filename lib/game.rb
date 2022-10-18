@@ -12,7 +12,7 @@ class Game
 
   def play
     until @logic.check_guesses(@guesses_left) || @logic.check_win(@word, @guesses)
-      @display.update(@guesses, @guesses_left, @word)
+      @display.update('Input a letter to guess', @guesses, @guesses_left, @word)
       letter = @logic.ask_for_input(@guesses)
       @guesses << letter
       if @logic.check_letter(@word, letter)
@@ -22,14 +22,10 @@ class Game
       end
     end
 
-    system('clear') or system('cls')
-    puts @display.word_values
-
     if @logic.check_win(@word, @guesses)
-      puts 'You win!'
+      @display.update('You win!', @guesses, @guesses_left, @word)
     else
-      puts 'You lose!'
-      puts "The word was: #{@word}"
+      @display.update("You lose!, The word was: #{@word}", @guesses, @guesses_left, @word)
     end
   end
 end

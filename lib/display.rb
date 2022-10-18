@@ -1,3 +1,5 @@
+require_relative 'colors'
+
 class Display
   attr_reader :word, :word_values
 
@@ -13,6 +15,7 @@ class Display
   end
 
   def update(guesses, guesses_left, word)
+    system('clear') or system('cls')
     puts word
     puts word_values
     puts "You have #{guesses_left} guesses left."

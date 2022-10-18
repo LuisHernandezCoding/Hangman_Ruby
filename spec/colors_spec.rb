@@ -3,25 +3,29 @@
 require_relative '../lib/colors'
 
 describe 'Colors' do
-  colors_array = %w[black red green yellow blue magenta cyan]
-  colors_array.each do |color|
-    describe color do
-      it 'should return the word "Test" with correct color' do
-        expect('test'.send(color)).to eql("\e[#{colors_array.index(color) + 30}mtest\e[0m")
-      end
+  colors = { 'default' => '38', 'black' => '30', 'red' => '31', 'green' => '32', 'brown' => '33', 'blue' => '34',
+             'purple' => '35', 'cyan' => '36', 'gray' => '37', 'dark gray' => '1;30', 'light red' => '1;31',
+             'light green' => '1;32', 'yellow' => '1;33', 'light blue' => '1;34', 'light purple' => '1;35',
+             'light cyan' => '1;36', 'white' => '1;37' }
+  colors.each do |color, value|
+    it "should return a string with the color #{color}" do
+      expect('test'.send(color)).to eq("\e[#{value}mtest\e[0m")
     end
   end
 end
+
 describe 'Background Colors' do
-  background_colors_array = %w[bg_black bg_red bg_green bg_orange bg_blue bg_magenta bg_cyan]
-  background_colors_array.each do |color|
-    describe color do
-      it 'should return the word "Test" with correct color' do
-        expect('test'.send(color)).to eql("\e[#{background_colors_array.index(color) + 40}mtest\e[0m")
-      end
+  bg_colors = { 'default' => '0', 'black' => '40', 'red' => '41', 'green' => '42', 'brown' => '43', 'blue' => '44',
+                'purple' => '45', 'cyan' => '46', 'gray' => '47', 'dark gray' => '100', 'light red' => '101',
+                'light green' => '102', 'yellow' => '103', 'light blue' => '104', 'light purple' => '105',
+                'light cyan' => '106', 'white' => '107' }
+  bg_colors.each do |color, value|
+    it "should return a string with the background color #{color}" do
+      expect('test'.send("bg_#{color}")).to eq("\e[#{value}mtest\e[0m")
     end
   end
 end
+
 describe 'Text Effects' do
   describe 'bold' do
     it 'should return the word "Test" with bold effect' do

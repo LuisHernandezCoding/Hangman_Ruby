@@ -28,10 +28,7 @@ class Logic
 
   def ask_for_input(guesses)
     letter = gets.chomp.downcase
-
-    until check_if_valid(letter, guesses)
-      letter = gets.chomp.downcase
-    end
+    letter = gets.chomp.downcase until check_if_valid(letter, guesses)
     letter
   end
 end

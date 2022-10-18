@@ -18,7 +18,7 @@ class Game
       letter = gets.chomp.downcase
       letter = gets.chomp.downcase until @logic.check_if_valid(letter, @guesses)
       @guesses << letter
-      @display.update_display(letter, @guesses) if @logic.check_letter(@word, letter)
+      @display.update_display(@guesses) if @logic.check_letter(@word, letter)
       @guesses_left -= 1 unless @logic.check_letter(@word, letter)
     end
     puts @display.word_display

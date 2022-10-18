@@ -1,24 +1,16 @@
 require_relative 'colors'
-
-TITLE = 'Hangman Game'.bold.center(55)
-CREDITS = 'By: @LuisHernandezCoding'.bold.center(55)
-
-MARGIN = ' ' * 4
-SIDE = ' ' * 13
-SIDE_LINE = ' ' * 12
-
-FULL_LINE = MARGIN + (' ' * 72)
-FRAME = ('+' * 50).bg_black.bold
-BLINK = '++'.bg_black.bold
+require_relative 'console_printer'
 
 class Display
+  include ConsolePrinter
   attr_reader :word, :word_values
   attr_accessor :show_instructions
 
   def initialize(word)
     @word = word
     @word_values = '_ ' * word.length
-    @show_instructions = true
+    @show_instructions = false
+    @cheat = true
   end
 
   def update_values(guesses)
@@ -29,22 +21,13 @@ class Display
 
   def update(guesses, guesses_left, word)
     system('clear') or system('cls')
-    print_header
+    print_message(['Hangman Game', 'By: @LuisHernandezCoding'], 100, 'bg_blue', 'bg_black', use_symbol: true)
     print_instructions if @show_instructions
-    puts word
-    puts word_values
-    puts "You have #{guesses_left} guesses left."
-    puts 'Guess a letter:'
-  end
-
-  def print_header
-    puts
-    puts MARGIN + (' ' * 72).bg_blue
-    puts MARGIN + (' ' * 11).bg_blue + FRAME + (' ' * 11).bg_blue
-    puts MARGIN + (' ' * 11).bg_blue + + BLINK + TITLE + BLINK + (' ' * 11).bg_blue
-    puts MARGIN + (' ' * 11).bg_blue + BLINK + CREDITS + BLINK + (' ' * 11).bg_blue
-    puts MARGIN + (' ' * 11).bg_blue + FRAME + (' ' * 11).bg_blue
-    puts MARGIN + ('_' * 72).bg_blue.bold
+    print_args = []
+    print_args[0] = "Guesses left: #{guesses_left}"
+    print_args[1] = "Cheating: #{@cheat ? word : 'Nope'}"
+    print_message([print_args.join(' | '), "Guesses: #{guesses.join(', ')}"], 100, 'bg_cyan', 'bg_black')
+    print_message([@word_values], 100, 'bg_cyan', 'bg_black')
   end
 
   def print_instructions
@@ -58,13 +41,6 @@ class Display
     instructions_text[6] = 'If you guess the word before you run out of guesses, you win!'
     instructions_text[7] = 'If you run out of guesses before you guess the word, you lose!'
     instructions_text[8] = 'Good luck!'
-    puts MARGIN + (' ' * 72).bg_green
-    puts MARGIN + instructions_text[0].center(72).bg_green.bold
-    puts MARGIN + (MARGIN + ('_' * 64) + MARGIN).bg_green
-    puts MARGIN + (' ' * 72).bg_green
-    instructions_text[1..8].each do |text|
-      puts MARGIN + text.center(72).bg_green
-    end
-    puts MARGIN + ('_' * 72).bg_green.bold
+    print_message(instructions_text, 100, 'bg_green')
   end
 end

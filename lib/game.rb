@@ -3,8 +3,8 @@ require_relative '../lib/display'
 
 class Game
   def initialize
-    @logic = Logic.new
-    p @word = @logic.get_word
+    @logic = Logic.new('spanish')
+    @word = @logic.getting_word
     @display = Display.new(@word)
     @guesses = []
     @guesses_left = @word.length
@@ -12,16 +12,18 @@ class Game
 
   def play
     until @logic.check_guesses(@guesses_left) || @logic.check_win(@word, @guesses)
-      puts @display.word_display
-      puts "You have #{@guesses_left} guesses left."
-      puts 'Guess a letter:'
-      letter = gets.chomp.downcase
-      letter = gets.chomp.downcase until @logic.check_if_valid(letter, @guesses)
-      @guesses << letter
-      @display.update_display(@guesses) if @logic.check_letter(@word, letter)
-      @guesses_left -= 1 unless @logic.check_letter(@word, letter)
+      system('clear') or system('cls')
+      @display.update(@guesses, @guesses_left, @word)
+      letter = @logic.ask_for_input(@guesses)
+      if @logic.check_letter(@word, letter)
+        @guesses << letter
+        @display.update_values(@guesses)
+      else
+        @guesses_left -= 1
+      end
     end
-    puts @display.word_display
+    system('clear') or system('cls')
+    puts @display.word_values
     if @logic.check_win(@word, @guesses)
       puts 'You win!'
     else

@@ -3,11 +3,11 @@ class Logic
     @language = language
   end
 
-  def get_word
+  def getting_word
     dictionary_path = "./assets/#{@language}.txt"
     dictionary = File.readlines(dictionary_path)
     dictionary = dictionary.select { |word| word.length.between?(5, 12) }
-    word = dictionary.sample.gsub("\n", '')
+    dictionary.sample.gsub("\n", '')
   end
 
   def check_letter(word, letter)
@@ -15,14 +15,23 @@ class Logic
   end
 
   def check_guesses(guesses)
-    guesses == 0
+    guesses.zero?
   end
 
   def check_win(word, guesses)
-    word.split('').uniq.all? { |letter| guesses.include?(letter) }
+    word.chars.uniq.all? { |letter| guesses.include?(letter) }
   end
 
   def check_if_valid(letter, guesses)
     !guesses.include?(letter) && letter.length == 1 && letter.match(/[a-z]/) ? true : false
+  end
+
+  def ask_for_input(guesses)
+    letter = gets.chomp.downcase
+    until check_if_valid(letter, guesses)
+      puts 'Please enter a valid letter:'
+      letter = gets.chomp.downcase
+    end
+    letter
   end
 end

@@ -1,14 +1,21 @@
 class Display
-  attr_reader :word, :word_display
+  attr_reader :word, :word_values
 
   def initialize(word)
     @word = word
-    @word_display = ' _ ' * word.length
+    @word_values = '_ ' * word.length
   end
 
-  def update_display(guesses)
-    @word_display = @word.chars.map do |char|
+  def update_values(guesses)
+    @word_values = @word.chars.map do |char|
       guesses.include?(char) ? char : '_'
     end.join(' ')
+  end
+
+  def update(guesses, guesses_left, word)
+    puts word
+    puts word_values
+    puts "You have #{guesses_left} guesses left."
+    puts 'Guess a letter:'
   end
 end

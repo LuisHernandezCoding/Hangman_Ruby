@@ -30,7 +30,6 @@ class Logic
     letter = gets.chomp.downcase
 
     until check_if_valid(letter, guesses)
-      puts 'Please enter a valid letter:'
       letter = gets.chomp.downcase
     end
     letter

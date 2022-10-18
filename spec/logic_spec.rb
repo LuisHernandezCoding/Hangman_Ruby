@@ -15,11 +15,10 @@ describe 'logic' do
   end
 
   it 'should check count of guesses and return if the game is over' do
-    word = 'hangman'
     guesses = 5
-    expect(logic.check_guesses(word, guesses)).to be false
-    guesses = 10
-    expect(logic.check_guesses(word, guesses)).to be true
+    expect(logic.check_guesses(guesses)).to be false
+    guesses = 0
+    expect(logic.check_guesses(guesses)).to be true
   end
 
   it 'should check if the player wins' do

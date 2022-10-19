@@ -34,8 +34,8 @@ class Menu
   end
 
   def print_menu(title, options)
-    @righ_panel = getting_logo + getting_menu_block(title, options[1], options[2], options[3], options[4])
-    @left_panel.map.with_index do |first, index|
+    @righ_panel = getting_logo + getting_menu_block(title, options[0], options[1], options[2], options[3])
+    full_panel = @left_panel.map.with_index do |first, index|
       first.to_s + @righ_panel[index].to_s
     end
     system('clear') or system('cls')

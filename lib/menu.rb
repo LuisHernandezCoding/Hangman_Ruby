@@ -94,7 +94,8 @@ class Menu
   end
 
   def set_difficulty
-    @righ_panel = getting_logo + getting_menu_block('Difficulty', 'Easy', 'Medium', 'Hard', 'Main Menu')
+    difficulty = @config['GameSettings']['General']['Difficulty']
+    @righ_panel = getting_logo + getting_menu_block("Difficulty: #{difficulty}", 'Easy', 'Medium', 'Hard', 'Main Menu')
     full_panel = @left_panel.map.with_index do |first, index|
       first.to_s + @righ_panel[index].to_s
     end
@@ -114,7 +115,8 @@ class Menu
   end
 
   def set_language
-    @righ_panel = getting_logo + getting_menu_block('Language', 'English', 'Spanish', 'Main Menu', 'Exit')
+    language = @config['GameSettings']['General']['Language']
+    @righ_panel = getting_logo + getting_menu_block("Language: #{language}", 'English', 'Spanish', 'Main Menu', 'Exit')
     full_panel = @left_panel.map.with_index do |first, index|
       first.to_s + @righ_panel[index].to_s
     end

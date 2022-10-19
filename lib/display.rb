@@ -48,8 +48,8 @@ class Display
     second_block << guesses[0..7].join(' ').center(40)
     second_block << guesses[8..15].join(' ').center(40) if guesses.length > 8
     second_block << ' '.center(40)
-    second_block << message.center(40)
-    second_block << ' '.center(40)
+    second_block << message[0].center(40)
+    second_block << message[1].center(40) if message.length > 1
     second_block << ' '.center(40)
     second_block << ' '.center(40)
     second_block << ' '.center(40)

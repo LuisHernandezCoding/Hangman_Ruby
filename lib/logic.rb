@@ -1,11 +1,13 @@
 class Logic
+  attr_accessor :language
+
   def initialize(language = 'english')
     @language = language
   end
 
   def getting_word
-    dictionary_path = "./assets/#{@language}.txt"
-    dictionary = File.readlines(dictionary_path)
+    directory = "./assets/#{@language}.txt"
+    dictionary = File.open(directory, 'r')
     dictionary = dictionary.select { |word| word.length.between?(6, 13) }
     dictionary.sample.gsub("\n", '')
   end
@@ -28,7 +30,7 @@ class Logic
 
   def ask_for_input(guesses)
     letter = gets.chomp.downcase
-    letter = gets.chomp.downcase until check_if_valid(letter, guesses)
+    letter = gets.chomp.downcase until check_if_valid(letter, guesses) || letter == 'save'
     letter
   end
 end

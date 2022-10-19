@@ -10,7 +10,7 @@ class Menu
   def initialize
     @left_panel = getting_animation(4)
     @righ_panel = getting_logo
-    @config = YAML.load_file('./assets/settings.yml')
+    @config = YAML.unsafe_load(File.read('./assets/settings.yml'))
   end
 
   def main
@@ -24,7 +24,9 @@ class Menu
     chose = gets.chomp.downcase
     chose = gets.chomp.downcase until chose.match(/[1-4]|cheat/)
     case chose
-    when '1' then start
+    when '1'
+      ask_for_load if File.exist?('./assets/save.yml')
+      start unless File.exist?('./assets/save.yml')
     when '2' then settings
     when '3' then instructions
     when '4' then exit
@@ -35,11 +37,42 @@ class Menu
     end
   end
 
+  def ask_for_load
+    @righ_panel = getting_logo + getting_menu_block('Start', 'New Game', 'Load Game', 'Main Menu', 'Exit')
+    full_panel = @left_panel.map.with_index do |first, index|
+      first.to_s + @righ_panel[index].to_s
+    end
+    system('clear') or system('cls')
+    print_message(full_panel, 100, 'bg_black', 'bg_red', use_frame: true)
+    print_input_field(100, 'bg_black')
+    chose = gets.chomp.downcase
+    chose = gets.chomp.downcase until chose.match(/[1-4]/)
+    case chose
+    when '1' then start
+    when '2' then load_game
+    when '3' then main
+    when '4' then exit
+    end
+  end
+
   def start
-    difficulty = @config['GameSettings']['General']['Difficulty']
-    language = @config['GameSettings']['General']['Language']
-    cheat = @config['GameSettings']['General']['Cheat']
+    config = @config['GameSettings']['General']
+    difficulty = config['Difficulty']
+    language = config['Language']
+    cheat = config['Cheat']
     Game.new(difficulty, language, cheat).play
+  end
+
+  def load_game
+    save = YAML.unsafe_load(File.read('./assets/save.yml'))
+    save = save.instance_variables.each_with_object({}) do |var, hash|
+      hash[var.to_s.delete('@')] = save.instance_variable_get(var)
+    end
+    difficulty = save['difficulty']
+    language = save['logic'].language
+    cheat = save['cheat']
+    game = Game.new(difficulty, language, cheat)
+    game.load_game(save)
   end
 
   def settings

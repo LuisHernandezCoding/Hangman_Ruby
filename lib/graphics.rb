@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module Graphics
   def getting_logo
     logo = []
@@ -32,6 +33,9 @@ module Graphics
     block << ' '.center(40)
   end
 
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
   def getting_animation(step = 10)
     animation_args = []
     case step
@@ -339,5 +343,9 @@ module Graphics
     animation_args.each_with_index do |arg, index|
       animation_args[index] = arg.center(34)
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end
+# rubocop:enable Metrics/ModuleLength

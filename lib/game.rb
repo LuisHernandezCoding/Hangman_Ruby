@@ -37,25 +37,28 @@ class Game
     until @logic.check_guesses(@guesses_left) || @logic.check_win(@word, @guesses)
       @display.update(['Input a letter to guess'], @guesses, @guesses_left, @word, @aniumation_state)
       letter = @logic.ask_for_input(@guesses)
-      if letter == 'save' && !@guesses.empty?
-        save_game
-        break
-      end
-      @guesses << letter
+      save_game if letter == 'save' && !@guesses.empty?
 
-      if @logic.check_letter(@word, letter)
-        @display.update_values(@guesses)
-      else
-        @guesses_left -= 1
-        @aniumation_state += 1 if @difficulty == 'easy'
-        @aniumation_state += 2 if @difficulty == 'medium'
-        @aniumation_state += 3 if @difficulty == 'hard'
-      end
+      @guesses << letter
+      check_letter(letter)
+    end
+  end
+
+  def check_letter(letter)
+    if @logic.check_letter(@word, letter)
+      @display.update_values(@guesses)
+    else
+      @guesses_left -= 1
+      @aniumation_state += 1 if @difficulty == 'easy'
+      @aniumation_state += 2 if @difficulty == 'medium'
+      @aniumation_state += 3 if @difficulty == 'hard'
     end
   end
 
   def save_game
     File.write('./assets/save.yml', YAML.dump(self))
+    @display.update(['Game Saved', 'Exiting Game'], @guesses, @guesses_left, @word, 4)
+    exit
   end
 
   def load_game(config)

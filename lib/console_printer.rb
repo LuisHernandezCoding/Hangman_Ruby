@@ -1,4 +1,3 @@
-
 module ConsolePrinter
   def print_message(messages, full_size, bg_color = 'bg_blue', inner_bg = 'bg_cyan', use_frame: false)
     frame = getting_frame('+', use_frame, full_size, inner_bg)

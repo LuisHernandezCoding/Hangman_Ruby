@@ -50,10 +50,7 @@ class Display
     second_block << ' '.center(40)
     second_block << message[0].center(40)
     second_block << message[1].center(40) if message.length > 1
-    second_block << ' '.center(40)
-    second_block << ' '.center(40)
-    second_block << ' '.center(40)
-    second_block << ' '.center(40)
+    4.times { second_block << ' '.center(40) }
     second_block
   end
 end

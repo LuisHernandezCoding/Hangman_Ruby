@@ -53,5 +53,4 @@ describe 'No Colors' do
     expect('test'.no_colors).to eql('test')
   end
 end
-
 # rubocop enable: Layout/LineLength

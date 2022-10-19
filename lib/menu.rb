@@ -13,48 +13,6 @@ class Menu
     @config = YAML.unsafe_load(File.read('./assets/settings.yml'))
   end
 
-  def main
-    @righ_panel = getting_logo + getting_menu_block('Main Menu', 'Start', 'Settings', 'Instructions', 'Exit')
-    full_panel = @left_panel.map.with_index do |first, index|
-      first.to_s + @righ_panel[index].to_s
-    end
-    system('clear') or system('cls')
-    print_message(full_panel, 100, 'bg_black', 'bg_red', use_frame: true)
-    print_input_field(100, 'bg_black')
-    chose = gets.chomp.downcase
-    chose = gets.chomp.downcase until chose.match(/[1-4]|cheat/)
-    case chose
-    when '1'
-      ask_for_load if File.exist?('./assets/save.yml')
-      start unless File.exist?('./assets/save.yml')
-    when '2' then settings
-    when '3' then instructions
-    when '4' then exit
-    when 'cheat'
-      @config['GameSettings']['General']['Cheat'] = !@config['GameSettings']['General']['Cheat']
-      File.write('./assets/settings.yml', @config.to_yaml)
-      main
-    end
-  end
-
-  def ask_for_load
-    @righ_panel = getting_logo + getting_menu_block('Start', 'New Game', 'Load Game', 'Main Menu', 'Exit')
-    full_panel = @left_panel.map.with_index do |first, index|
-      first.to_s + @righ_panel[index].to_s
-    end
-    system('clear') or system('cls')
-    print_message(full_panel, 100, 'bg_black', 'bg_red', use_frame: true)
-    print_input_field(100, 'bg_black')
-    chose = gets.chomp.downcase
-    chose = gets.chomp.downcase until chose.match(/[1-4]/)
-    case chose
-    when '1' then start
-    when '2' then load_game
-    when '3' then main
-    when '4' then exit
-    end
-  end
-
   def start
     config = @config['GameSettings']['General']
     difficulty = config['Difficulty']
@@ -75,16 +33,52 @@ class Menu
     game.load_game(save)
   end
 
-  def settings
-    @righ_panel = getting_logo + getting_menu_block('Settings', 'Difficulty', 'Language', 'Main Menu', 'Exit')
-    full_panel = @left_panel.map.with_index do |first, index|
+  def print_menu(title, options)
+    @righ_panel = getting_logo + getting_menu_block(title, options[1], options[2], options[3], options[4])
+    @left_panel.map.with_index do |first, index|
       first.to_s + @righ_panel[index].to_s
     end
     system('clear') or system('cls')
     print_message(full_panel, 100, 'bg_black', 'bg_red', use_frame: true)
     print_input_field(100, 'bg_black')
+  end
+
+  def ask_for_input(options = %w[1 2 3 4])
     chose = gets.chomp.downcase
-    chose = gets.chomp.downcase until chose.match(/[1-4]/)
+    chose = gets.chomp.downcase until chose.match(/[#{options.join}]/)
+    chose
+  end
+
+  def main
+    print_menu('Main Menu', %w[Start Settings Instructions Exit])
+    chose = ask_for_input(%w[1 2 3 4 cheat])
+    case chose
+    when '1'
+      File.exist?('./assets/save.yml') ? ask_for_load : start
+    when '2' then settings
+    when '3' then instructions
+    when '4' then exit
+    when 'cheat'
+      @config['GameSettings']['General']['Cheat'] = !@config['GameSettings']['General']['Cheat']
+      File.write('./assets/settings.yml', @config.to_yaml)
+      main
+    end
+  end
+
+  def ask_for_load
+    print_menu('Start', ['New Game', 'Load Game', 'Main Menu', 'Exit'])
+    chose = ask_for_input(%w[1 2 3 4])
+    case chose
+    when '1' then start
+    when '2' then load_game
+    when '3' then main
+    when '4' then exit
+    end
+  end
+
+  def settings
+    print_menu('Settings', ['Difficulty', 'Language', 'Main Menu', 'Exit'])
+    chose = ask_for_input(%w[1 2 3 4])
     case chose
     when '1' then set_difficulty
     when '2' then set_language
@@ -95,15 +89,8 @@ class Menu
 
   def set_difficulty
     difficulty = @config['GameSettings']['General']['Difficulty']
-    @righ_panel = getting_logo + getting_menu_block("Difficulty: #{difficulty}", 'Easy', 'Medium', 'Hard', 'Main Menu')
-    full_panel = @left_panel.map.with_index do |first, index|
-      first.to_s + @righ_panel[index].to_s
-    end
-    system('clear') or system('cls')
-    print_message(full_panel, 100, 'bg_black', 'bg_red', use_frame: true)
-    print_input_field(100, 'bg_black')
-    chose = gets.chomp.downcase
-    chose = gets.chomp.downcase until chose.match(/[1-4]/)
+    print_menu("Difficulty: #{difficulty}", ['Easy', 'Medium', 'Hard', 'Main Menu'])
+    chose = ask_for_input(%w[1 2 3 4])
     case chose
     when '1' then @config['GameSettings']['General']['Difficulty'] = 'easy'
     when '2' then @config['GameSettings']['General']['Difficulty'] = 'medium'
@@ -116,15 +103,8 @@ class Menu
 
   def set_language
     language = @config['GameSettings']['General']['Language']
-    @righ_panel = getting_logo + getting_menu_block("Language: #{language}", 'English', 'Spanish', 'Main Menu', 'Exit')
-    full_panel = @left_panel.map.with_index do |first, index|
-      first.to_s + @righ_panel[index].to_s
-    end
-    system('clear') or system('cls')
-    print_message(full_panel, 100, 'bg_black', 'bg_red', use_frame: true)
-    print_input_field(100, 'bg_black')
-    chose = gets.chomp.downcase
-    chose = gets.chomp.downcase until chose.match(/[1-4]/)
+    print_menu("Language: #{language}", ['English', 'Spanish', 'Main Menu', 'Exit'])
+    chose = ask_for_input(%w[1 2 3 4])
     case chose
     when '1' then @config['GameSettings']['General']['Language'] = 'english'
     when '2' then @config['GameSettings']['General']['Language'] = 'spanish'
@@ -136,16 +116,8 @@ class Menu
   end
 
   def instructions
-    @righ_panel = getting_logo + getting_menu_block('Instructions', 'Main Menu', 'Exit', '', '')
-    full_panel = @left_panel.map.with_index do |first, index|
-      first.to_s + @righ_panel[index].to_s
-    end
-    system('clear') or system('cls')
-    print_message(full_panel, 100, 'bg_black', 'bg_red', use_frame: true)
-    print_instructions
-    print_input_field(100, 'bg_black')
-    chose = gets.chomp.downcase
-    chose = gets.chomp.downcase until chose.match(/[1-2]/)
+    print_menu('Instructions', ['Main Menu', 'Exit', '', ''])
+    chose = ask_for_input(%w[1 2])
     case chose
     when '1' then main
     when '2' then exit

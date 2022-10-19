@@ -1,7 +1,9 @@
+---
 GameSettings:
   General:
-    Difficulty: 'medium'
-    Language: 'spanish'
+    Difficulty: hard
+    Language: spanish
+    Cheat: false
   Graphics:
-    Background: 'bg_red'
+    Background: bg_red
     Size: 100

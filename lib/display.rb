@@ -6,12 +6,11 @@ class Display
   include ConsolePrinter
   include Graphics
   attr_reader :word, :word_values
-  attr_accessor :show_instructions, :game_started, :cheat
+  attr_accessor :game_started, :cheat
 
   def initialize(word, cheat)
     @word = word
     @word_values = '_ ' * word.length
-    @show_instructions = false
     @cheat = cheat
     @game_started = true
   end
@@ -24,7 +23,6 @@ class Display
 
   def update(message, guesses, guesses_left, word, aniumation_state)
     system('clear') or system('cls')
-    print_instructions if @show_instructions
     print_args = getting_animation(aniumation_state)
     print_args.push(@cheat ? "CHEATING: #{word}" : nil)
 
@@ -33,20 +31,6 @@ class Display
       first.to_s + righ_panel[index].to_s
     end
     print_message(print_args, 100, 'bg_black', 'bg_red', use_frame: true)
-  end
-
-  def print_instructions
-    instructions_text = []
-    instructions_text[0] = 'Instructions'
-    instructions_text[1] = 'The computer will choose a word at random'
-    instructions_text[2] = 'You will have to guess the word by guessing one letter at a time'
-    instructions_text[3] = 'If you guess a letter that is in the word it will show you where it is'
-    instructions_text[4] = 'If you guess a letter that is not in the word, you will lose a guess'
-    instructions_text[5] = 'You will have as many guesses depending on the difficulty'
-    instructions_text[6] = 'If you guess the word before you run out of guesses, you win!'
-    instructions_text[7] = 'If you run out of guesses before you guess the word, you lose!'
-    instructions_text[8] = 'Good luck!'
-    print_message(instructions_text, 100, 'bg_green')
   end
 
   def game_block(message, guesses, guesses_left)

@@ -2,7 +2,7 @@ require_relative '../lib/logic'
 require_relative '../lib/display'
 
 class Game
-  def initialize(difficulty = 'easy', language = 'english', cheat: false)
+  def initialize(difficulty, language, cheat)
     @logic = Logic.new(language)
     @word = @logic.getting_word
     @display = Display.new(@word, cheat)

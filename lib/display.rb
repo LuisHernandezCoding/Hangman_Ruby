@@ -67,6 +67,9 @@ class Display
     second_block << message.center(40)
     second_block << ' '.center(40)
     second_block << ' '.center(40)
+    second_block << ' '.center(40)
+    second_block << ' '.center(40)
+    second_block << ' '.center(40)
     second_block
   end
 end

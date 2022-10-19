@@ -8,11 +8,11 @@ class Display
   attr_reader :word, :word_values
   attr_accessor :show_instructions, :game_started, :cheat
 
-  def initialize(word)
+  def initialize(word, cheat)
     @word = word
     @word_values = '_ ' * word.length
     @show_instructions = false
-    @cheat = false
+    @cheat = cheat
     @game_started = true
   end
 
@@ -29,8 +29,9 @@ class Display
     print_args.push(@cheat ? "CHEATING: #{word}" : nil)
 
     righ_panel = game_block(message, guesses, guesses_left) if game_started
-    print_args = process_board(print_args, righ_panel)
-
+    print_args.map!.with_index do |first, index|
+      first.to_s + righ_panel[index].to_s
+    end
     print_message(print_args, 100, 'bg_black', 'bg_red', use_frame: true)
   end
 
@@ -67,11 +68,5 @@ class Display
     second_block << ' '.center(40)
     second_block << ' '.center(40)
     second_block
-  end
-
-  def process_board(print_args, second)
-    print_args.map.with_index do |first, index|
-      first.to_s + second[index].to_s
-    end
   end
 end

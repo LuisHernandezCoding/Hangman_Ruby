@@ -2,14 +2,15 @@ require_relative '../lib/logic'
 require_relative '../lib/display'
 
 class Game
-  def initialize(difficulty = 'easy')
-    @logic = Logic.new('spanish')
+  def initialize(difficulty = 'easy', language = 'english', cheat: false)
+    @logic = Logic.new(language)
     @word = @logic.getting_word
-    @display = Display.new(@word)
+    @display = Display.new(@word, cheat)
     @guesses = []
     @guesses_left = 11
     @difficulty = difficulty
     @aniumation_state = 0
+    @cheat = cheat
   end
 
   def play

@@ -1,0 +1,7 @@
+GameSettings:
+  General:
+    Difficulty: 'medium'
+    Language: 'spanish'
+  Graphics:
+    Background: 'bg_red'
+    Size: 100

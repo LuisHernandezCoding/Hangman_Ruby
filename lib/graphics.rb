@@ -11,7 +11,27 @@ module Graphics
     logo[7] = 'by: @LuisHernandezCoding'.center(40)
     logo
   end
-  
+
+  def getting_menu_block(title, option1, option2, option3, option4)
+    block = []
+    block << ' '.center(40)
+    block << '     ╔════════════════════════════╗     '
+    block << '     ║                            ║     '
+    block << "     ║#{title.center(28)}║     "
+    block << '     ║                            ║     '
+    block << '     ╚══╦══════════════════════╦══╝     '
+    block << "        ║#{"1. #{option1}".center(22)}║        "
+    block << '        ║ """""""""""""""""""" ║        '
+    block << "        ║#{"2. #{option2}".center(22)}║        "
+    block << '        ║ """""""""""""""""""" ║        '
+    block << "        ║#{"3. #{option3}".center(22)}║        "
+    block << '        ║ """""""""""""""""""" ║        '
+    block << "        ║#{"4. #{option4}".center(22)}║        "
+    block << '        ║ """""""""""""""""""" ║        '
+    block << '        ╚══════════════════════╝        '
+    block << ' '.center(40)
+  end
+
   def getting_animation(step = 10)
     animation_args = []
     case step
@@ -35,6 +55,7 @@ module Graphics
       animation_args << '  ║ ║                          '
       animation_args << '""""""""""""║═════════════║"""║/8'
       animation_args << '"""║"║""""""║═════════════║"║"║/ '
+      animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
@@ -63,6 +84,7 @@ module Graphics
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
+      animation_args << '  ║ ║                     ║ ║  '
     when 2
       animation_args << '  ╔════════════()══════╗       '
       animation_args << '  ║ ╔══════════()══════╝       '
@@ -83,6 +105,7 @@ module Graphics
       animation_args << '  ║ ║          //  ║  .  ║  \\\\ '
       animation_args << '""""""""""""║═════════════║"""║/8'
       animation_args << '"""║"║""""""║═════════════║"║"║/ '
+      animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
@@ -111,6 +134,7 @@ module Graphics
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
+      animation_args << '  ║ ║                     ║ ║  '
     when 4
       animation_args << '  ╔════════════()══════╗       '
       animation_args << '  ║ ╔══════════()══════╝       '
@@ -131,6 +155,7 @@ module Graphics
       animation_args << '  ║ ║             / ║   ║ \\    '
       animation_args << '""""""""""""║═════════════║"""║/8'
       animation_args << '"""║"║""""""║═════════════║"║"║/ '
+      animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
@@ -159,6 +184,7 @@ module Graphics
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
+      animation_args << '  ║ ║                     ║ ║  '
     when 6
       animation_args << '  ╔════════════()══════╗       '
       animation_args << '  ║ ╔══════════()══════╝       '
@@ -179,6 +205,7 @@ module Graphics
       animation_args << '  ║ ║             / ║   ║ \\    '
       animation_args << '""""""""""""║═════════════║"""║/8'
       animation_args << '"""║"║""""""║═════════════║"║"║/ '
+      animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
@@ -207,6 +234,7 @@ module Graphics
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
+      animation_args << '  ║ ║                     ║ ║  '
     when 8
       animation_args << '  ╔════════════()══════╗       '
       animation_args << '  ║ ╔══════════()══════╝       '
@@ -227,6 +255,7 @@ module Graphics
       animation_args << '  ║ ║           / ║ ║ \\        '
       animation_args << '""""""""""""║═════════════║"""║/8'
       animation_args << '"""║"║""""""║═════════════║"║"║/ '
+      animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
@@ -255,6 +284,7 @@ module Graphics
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
+      animation_args << '  ║ ║                     ║ ║  '
     when 10
       animation_args << '  ╔════════════║)══════╗       '
       animation_args << '  ║ ╔══════════(║══════╝       '
@@ -275,6 +305,7 @@ module Graphics
       animation_args << '  ║ ║           / ║ ║ \\        '
       animation_args << '""""""""""""║═════════════║"""║/8'
       animation_args << '"""║"║""""""║═════════════║"║"║/ '
+      animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
       animation_args << '  ║ ║                     ║ ║  '
@@ -303,6 +334,7 @@ module Graphics
       animation_args << '  ║ ║        \ \          ║ ║  '
       animation_args << '  ║ ║         \ \         ║ ║  '
       animation_args << '  ║_║          \'\'         ║_║  '
+      animation_args << '  ║ ║                     ║ ║  '
     end
     animation_args.each_with_index do |arg, index|
       animation_args[index] = arg.center(34)

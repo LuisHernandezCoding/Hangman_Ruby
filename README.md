@@ -4,6 +4,7 @@ In this project, i built a Hangman game that can be executed on the console, it 
 
 The main goal is to put into practice main concepts from File Managing and serialization
 
+![Hangman Preview](assets/HangManPreview.png)
 
 ###### Definition
 
